@@ -6,6 +6,7 @@ use App\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use File;
 
 class ClientController extends Controller
 {
@@ -56,6 +57,18 @@ class ClientController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }else{
+            if($file = $request->hasFile('profile_picture')) {            
+                $file = $request->file('profile_picture');                
+                $fileName = $file->getClientOriginalName();
+                $destinationPath = public_path().'/images/';
+                if (!File::exists($destinationPath))
+                {
+                    mkdir($destinationPath);
+                }
+                
+                $file->move($destinationPath,$fileName);
+                $input['profile_picture'] = $fileName;
+            }
             Client::create($input);
             Session::flash('flash_message', 'Client successfully added!');
             return redirect('clients');
@@ -101,9 +114,7 @@ class ClientController extends Controller
     public function update(Request $request, Client $client, $id)
     {
         $input = $request->all();
-        // echo "<pre>";
-        // print_r($input);
-        // exit;
+        
         $validator = Validator::make($input, [
             'name' => 'required|max:255',
             'email' => 'required|unique:clients,email,'.$id,
@@ -115,6 +126,19 @@ class ClientController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }else{
+            if($file = $request->hasFile('profile_picture')) {            
+                $file = $request->file('profile_picture');                
+                $fileName = $file->getClientOriginalName();
+                $destinationPath = public_path().'/images/';
+                if (!File::exists($destinationPath))
+                {
+                    mkdir($destinationPath);
+                }
+                
+                $file->move($destinationPath,$fileName);
+                $input['profile_picture'] = $fileName;
+                
+            }
             Client::find($id)->update($input);
             Session::flash('flash_message', 'Client successfully updated!');
             return redirect('clients');

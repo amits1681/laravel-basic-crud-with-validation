@@ -6,7 +6,7 @@
         <!-- FORM  -->      
        <div class="col-md-12">
            
-        {{ Form::open(array('url' => 'clients/update/'.$client->id, 'method' => 'put','class'=>'form-horizontal')) }}
+        {{ Form::open(array('url' => 'clients/update/'.$client->id, 'method' => 'put','class'=>'form-horizontal', 'files' => true)) }}
             <fieldset>
 
             <!-- Form Name -->
@@ -17,7 +17,6 @@
               <label class="col-md-4 control-label" for="client-name">Name</label>  
               <div class="col-md-4">
               <input id="client-name" name="name" value="{{ $client->name }}" type="text" placeholder="your client's name" class="form-control input-md">
-              <span class="help-block">Full name of your customer</span>  
               </div>
             </div>
 
@@ -29,11 +28,17 @@
                   <span class="input-group-addon">@</span>
                   <input id="client-email" value="{{ $client->email }}" name="email" class="form-control" placeholder="yourname@yourdomain.com" type="text">
                 </div>
-                <p class="help-block">Email of your client</p>
               </div>
             </div>
 
-
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="client-email">Profile picture</label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input type="file" name="profile_picture">
+                </div>
+              </div>
+            </div>
 
             <!-- Multiple Radios -->
             <div class="form-group">

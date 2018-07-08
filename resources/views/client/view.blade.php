@@ -21,6 +21,10 @@
                 <td>Email</td>
                 <td><a href="mailto:{{ $client->email }}">{{ $client->email }}</a></td>
               </tr>
+              <tr>
+                <td>Profile Picture</td>
+                <td><img src="{{URL::asset('/images/'.$client->profile_picture)}}" alt="profile Pic" height="200" width="200"></td>
+              </tr>
             </tbody>
           </table>
     </div>
